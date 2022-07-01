@@ -2,11 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
+
+  
+
 function App() {
   const [position, setPosition] = useState(0);
   const [infoPokemon, setInfoPokemon] = useState([]);
   const [result, setResult] = useState([]);
   const modalNombre = useRef(null);
+  
+
+ 
 
   useEffect(() => {
     axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${position}&limit=10`).then(info => {
