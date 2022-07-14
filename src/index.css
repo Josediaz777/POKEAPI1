@@ -19,3 +19,11 @@ code {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
   padding: 5%;
 }
+
+.centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: lightslategrey;
+  color: white;
+}
