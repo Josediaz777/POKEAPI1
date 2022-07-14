@@ -4,11 +4,13 @@ import './App.css';
 import { SearchProvider, PokemonData, BuscadorConsumer } from './context/busqueda';
 import { mostrarData } from './context/resultados';
 import { Button } from '@mui/material';
+import Footer from './components/footer';
 
 
 export default () => <SearchProvider>
-  <BuscadorConsumer/>
+  <BuscadorConsumer />
   <App />
+  <Footer />
 </SearchProvider>
 
 function App() {
@@ -23,30 +25,30 @@ function App() {
   useEffect(() => {
     console.log(mostrar.busquedas);
   }, [mostrar])
-  
+
   useEffect(() => {
     axios.get(`https://pokeapi.co/api/v2/pokemon?limit=1126`).then(info => {
       setInfoPokemon(info.data.results);
     });
   }, [position]);
 
- useEffect(() => {
-    if(infoPokemon.length > 0){
+  useEffect(() => {
+    if (infoPokemon.length > 0) {
       infoPokemon.slice(position, positionTwo).filter((elemento) => {
-        if(elemento.name.toString().toLowerCase().includes(buscador.busquedas)){
+        if (elemento.name.toString().toLowerCase().includes(buscador.busquedas)) {
           setResult([]);
           const url = elemento.url.split('/');
           axios.get(`https://pokeapi.co/api/v2/pokemon/${url[6]}`).then(data => {
-            setResult((current) => [...current, {data: data.data}]);            
+            setResult((current) => [...current, { data: data.data }]);
           });
         }
-      });    
+      });
     }
   }, [buscador]);
 
 
   useEffect(() => {
-    if(infoPokemon.length > 0){
+    if (infoPokemon.length > 0) {
       infoPokemon.slice(position, positionTwo).map(data => {
         const id = data.url.split('/');
         axios.get(`https://pokeapi.co/api/v2/pokemon/${id[6]}`).then(data => {
@@ -65,24 +67,24 @@ function App() {
       });
     });
   }, [position]);
- 
+
   return (
     <div className="App">
       <h1 className='titulo'>POKEDEX DE MANUEL</h1>
       <hr></hr><br></br>
-      <button className='btn btn-outline-success' onClick={() => {setPosition(position - 10); setPositionTwo(positionTwo - 10);}}>Back</button>
-      <button className='btn btn-outline-success' onClick={() => {setPosition(position + 10); setPositionTwo(positionTwo + 10);}}>Next</button>
+      <button className='btn btn-outline-success' onClick={() => { setPosition(position - 10); setPositionTwo(positionTwo - 10); }}>Back</button>
+      <button className='btn btn-outline-success' onClick={() => { setPosition(position + 10); setPositionTwo(positionTwo + 10); }}>Next</button>
       <div className='grid'>
         {
-          result.length > 0 ? result.slice(0, 10).map((data, index) => (    
-            <div key={index} className="card">
-              <div className="container">                
-                <h4><b>{data.data.name}</b></h4> 
-                <img ref={modalNombre} src={data.data.sprites.front_default} alt={data.data.name}/>
+          result.length > 0 ? result.slice(0, 10).map((data, index) => (
+            <div key={index} className="card" onClick={(e) => window.location.href = `/pokemons/${data.data.id}`}>
+              <div className="container">
+                <h4><b>{data.data.name}</b></h4>
+                <img ref={modalNombre} src={data.data.sprites.front_default} alt={data.data.name} />
               </div>
             </div>
-          )): <>
-            <Button>Hola</Button>
+          )) : <>
+            <Button>Presiona back o next</Button>
           </>
         }
       </div>
