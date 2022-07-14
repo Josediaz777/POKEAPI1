@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Acercade from './components/acercade';
 import Pokemon from './components/pokemons';
+import './config/i18next';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

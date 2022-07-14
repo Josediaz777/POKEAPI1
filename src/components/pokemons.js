@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from "react-i18next";
+
+
 
 function Pokemon() {
+    const { t, i18n } = useTranslation(['idioma']);
+
     const url = window.location.pathname.split('/');
     const [pokemon, setPokemon] = useState([]);
     useEffect(() => {
@@ -28,7 +33,7 @@ function Pokemon() {
                                     <li>No hay movimientos</li>
                                 )
                             } placement='top'>
-                                <button className='btn btn-outline-dark'>Movimientos</button>
+                                <button className='btn btn-outline-dark'>{t("moves")}</button>
                             </Tooltip>
                             <Tooltip title={
                                 pokemon.abilities.length > 0 ? pokemon.abilities.slice(0, 10).map((data, index) => (
@@ -37,7 +42,7 @@ function Pokemon() {
                                     <li>No hay habilidades</li>
                                 )
                             } placement='top'>
-                                <button className='btn btn-outline-success'>Habilidades</button>
+                                <button className='btn btn-outline-success'>{t("abilities")}</button>
                             </Tooltip>
                         </div>
                     </div>

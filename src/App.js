@@ -5,6 +5,7 @@ import { SearchProvider, PokemonData, BuscadorConsumer } from './context/busqued
 import { mostrarData } from './context/resultados';
 import { Button } from '@mui/material';
 import Footer from './components/footer';
+import { useTranslation } from 'react-i18next';
 
 
 export default () => <SearchProvider>
@@ -14,6 +15,7 @@ export default () => <SearchProvider>
 </SearchProvider>
 
 function App() {
+  const { t, i18n } = useTranslation(['idioma']);
   const buscador = PokemonData();
   const mostrar = mostrarData();
   const [position, setPosition] = useState(0);
@@ -70,10 +72,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className='titulo'>POKEDEX DE MANUEL</h1>
+      <h1 className='titulo'>{t("title")}</h1>
       <hr></hr><br></br>
-      <button className='btn btn-outline-success' onClick={() => { setPosition(position - 10); setPositionTwo(positionTwo - 10); }}>Back</button>
-      <button className='btn btn-outline-success' onClick={() => { setPosition(position + 10); setPositionTwo(positionTwo + 10); }}>Next</button>
+      <button className='btn btn-outline-success' onClick={() => { setPosition(position - 10); setPositionTwo(positionTwo - 10); }}>{t("back")}</button>
+      <button className='btn btn-outline-success' onClick={() => { setPosition(position + 10); setPositionTwo(positionTwo + 10); }}>{t("next")}</button>
       <div className='grid'>
         {
           result.length > 0 ? result.slice(0, 10).map((data, index) => (
